@@ -1,0 +1,2 @@
+{% set _req_ = _define.nullable ? "" : "required" %}
+<textarea class="form-control" rows="{{ _define.length <= 1000 ? 5 : 10 }}" id="{{ _sId~_name }}" name="_{{ _name }}" {{ _req_ }} {{ _readonly_ }}>{{ _value }}</textarea>

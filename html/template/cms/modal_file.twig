@@ -1,0 +1,47 @@
+<form class="form-horizontal" role="form" action="{{ main_url }}{{ form }}"  method="POST">
+    <div class="form-group">
+        <div class="col-sm-12">
+            <div class="input-group">
+                <input type="text" class="form-control" name="_file_search_" value="{{ search }}"  id="_file_search_text_">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" onclick="onSearch();return false;">Search</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</form>
+<table class="table table-striped">
+    <tbody>
+    {% for row in files %}
+    <tr>
+        <td><a href="#" class="_file_item_">{{ row[0] }}</a></td>
+        <td><a href="#" class="_file_item_">{{ row[1] }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<script>
+    $('._file_item_').click(function(e) {
+        hideModal($(this).text(), null);
+    });
+    function onSearch() {
+        loadModal("{{ main_url }}{{ form }}?_file_search_=" + $('#_file_search_text_').val());
+    }
+</script>
+{% if page > 1 or next %}
+    <ul class="pagination">
+        {% if page > 1 %}
+            <li><a href="{{ main_url }}{{ form }}/{{ page - 1 }}?_file_search_={{ search }}" class="_modal_link_">Previous Page</a></li>
+        {% endif %}
+        <li class="active"><a href="#">{{ page }}</a></li>
+        {% if next %}
+            <li><a href="{{ main_url }}{{ form }}/{{ page + 1 }}?_file_search_={{ search }}" class="_modal_link_">Next Page</a></li>
+        {% endif %}
+    </ul>
+<script>
+    $('._modal_link_').click(function(e) {
+        e.preventDefault();
+        loadModal($(this).attr("href"));
+    });
+</script>
+{% endif %}

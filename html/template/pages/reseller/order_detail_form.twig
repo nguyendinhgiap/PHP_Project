@@ -1,0 +1,140 @@
+<script>
+    var cards = [
+        {% for __items in items['cards'] %}
+        {"id": {{ __items["order_plan_id"] }}, "code": '{{ __items["code"] }}{{ __items["card_id"] }}'},
+        {% endfor %}
+    ];
+</script>
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Detail</div>
+        <div class="row wrapper">
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="editting">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Code</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="id" value="{{ items["id"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Datetime</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="datetime" value="{{ items["datetime"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Paid</label>
+                            <div class="col-sm-2">
+                                <label class="i-switch m-t-xs m-r">
+                                    <input type="checkbox" name="paid" value="1" {{ items["paid"] == 1 ? 'checked="checked"' }} disabled="disabled">
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Prices</label>
+                            <div class="col-sm-10">
+                                <table class="table table-striped b-t b-light">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Cost</th>
+                                        <th>Discount</th>
+                                        <th>Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>Device</th>
+                                        <td>${{ items["device_price"] }}</td>
+                                        <td>{{ items["device_discount"] }}%</td>
+                                        <td>${{ items["device_price_after_discount"] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Card</th>
+                                        <td>${{ items["card_price"] }}</td>
+                                        <td>{{ items["plan_discount"] }}%</td>
+                                        <td>${{ items["card_price_after_discount"] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td>${{ items["price"] }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Device number</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="device_count" value="{{ items["devices"]|length }}/{{ items["device_count"] }}" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+
+                        {% set _value = items["plans"] %}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Plans</label>
+                            <div class="col-sm-10">
+                                <div class="table-responsive">
+                                    <table class="table table-striped b-t b-light">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            {% for title in db["plans"].join.displays_title %}
+                                                {% if title != "ID" %}
+                                                    <th>{{ title }}</th>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        {% set index = index_start %}
+                                        <tbody>
+                                        {% for __items in _value %}
+                                            {% set index = index + 1 %}
+                                            <tr>
+                                                <td>{{ index }}</td>
+                                                {% for __key, __value in __items %}
+                                                    {% if __key != "id" %}
+                                                        <td>{{ __key == "price" ? "$" }}{{ __value }}</td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-default" onclick="window.location='{{ main_url }}{{ form }}';return false;">Back</button>
+                            {% if isDelete %}
+                                <button type="button" class="btn btn-danger" onclick="onDelete();return false;">Delete</button>
+                                <script>
+                                    function onDelete() {
+                                        if (confirm('Do you want to delete this order?')) {
+                                            window.location='{{ main_url }}{{ form }}?action=delete&{{ pkey }}={{ items[pkey] }}';
+                                        } else {
+                                            // Do nothing!
+                                        }
+                                    }
+                                </script>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

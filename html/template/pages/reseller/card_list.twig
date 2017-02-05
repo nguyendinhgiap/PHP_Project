@@ -1,0 +1,246 @@
+<div class="table-responsive">
+    <table class="table table-striped b-t b-light">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Plan name</th>
+            <th>Plan duration</th>
+            <th>Available Cards</th>
+            <th></th>
+        </tr>
+        </thead>
+        {% set index_start = (list.page - 1) * list.limit %}
+        {% set index_end = index_start + list.data.list|length %}
+        {% set index = index_start %}
+        <tbody>
+        {% for data in list.data.list %}
+            {% set index = index + 1 %}
+            <tr>
+                <td>{{ index }}</td>
+                <td>{{ data["plan_name"] }}</td>
+                <td>{{ data["plan_number"] }} months</td>
+                <td>{{ data["number"] }}</td>
+                <td>
+                    <button class="btn btn-info sell" type="button" param_number="{{ data["plan_number"] }}" param_plan="{{ data["plan_id"] }}">
+                        <i class="fa-shopping-cart fa"></i>
+                        <span class="text"> Sell a card</span>
+                    </button>
+                </td>
+            </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sell card</h4>
+            </div>
+            <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                <input type="hidden" id="_plan_id" name="plan_id" value="">
+                <input type="hidden" id="_plan_number" name="plan_number" value="">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="true" name="is_device" id="is_device" checked="checked">
+                                    <i></i>
+                                    Set to device
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">MAC</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="_device_id" name="device_id" placeholder="MAC" required="required">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="line line-dashed b-b line-lg pull-in"></div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label"></label>
+                        <div class="col-sm-10">
+                            <div class="checkbox">
+                                <label class="i-checks">
+                                    <input type="checkbox" value="true" name="customer_info" id="customer_info_id" checked="checked">
+                                    <i></i>
+                                    Customer Information
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Phone</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control c_info" name="phone" id="autocomplete" placeholder="Phone" required="required">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="email" id="email_id" class="form-control c_info" name="email" placeholder="Email">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Name</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <input type="text" id="first_name_id" class="form-control c_info" name="first_name" placeholder="First name">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" id="last_name_id" class="form-control c_info" name="last_name" placeholder="Last name">
+                                </div>
+                                <div class="col-md-2">
+                                    <select name="sex"  id="sex_id">
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Country</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="_country" name="country" value="" placeholder="Country">
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="_province" name="province" value="" placeholder="Province/City">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">District</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <input type="text" class="form-control" id="_district" name="district" value="" placeholder="District">
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" id="_zipcode" name="zipcode" value="" placeholder="Zipcode">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">Address</label>
+                        <div class="col-sm-10">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <textarea name="address" class="form-control c_info" rows="3" id="address_id" placeholder="Address"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="_submit_id" class="btn btn-primary" name="action" value="editting" disabled="disabled">Sell</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#_device_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/reseller/search_device',
+            onSelect: function (data) {
+                $("#_submit_id").removeAttr("disabled");
+            }
+        });
+        $("#_device_id").keydown(function(event) {
+            if (event.which != 13 && event.which != 9) {
+                $("#_submit_id").prop('disabled', true);
+            }
+        });
+
+        $('#_country').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/country'
+        });
+        $('#_province').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/province'
+        });
+        $('#_district').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/district'
+        });
+
+
+        $('select').multiselect({
+            enableFiltering: false
+        });
+
+        $('#autocomplete').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/reseller/search_customer',
+            onSelect: function (data) {
+//                    console.log(data);
+                $("#first_name_id").val(data.data["first_name"]);
+                $("#last_name_id").val(data.data["last_name"]);
+                $("#email_id").val(data.data["email"]);
+                $("#address_id").val(data.data["address"]);
+                $('#sex_id').multiselect('select', [data.data["sex"]]);
+                $('#sex_id').multiselect('refresh');
+                $("#_country").val(data.data["country"]);
+                $("#_zipcode").val(data.data["zipcode"]);
+                $("#_province").val(data.data["province"]);
+                $("#_district").val(data.data["district"]);
+            }
+        });
+
+        $(window).keydown(function(event){
+            if((event.which == 13) && ($(event.target)[0] == $("#_device_id")[0])) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        $("#customer_info_id").change(function() {
+            if(this.checked) {
+                $(".c_info").removeAttr('disabled');
+                $("#sex_id").multiselect('enable')
+            } else {
+                $(".c_info").attr('disabled','disabled');
+                $("#sex_id").multiselect('disable')
+            }
+        });
+
+        $("#is_device").change(function() {
+            if(this.checked) {
+                $("#_device_id").removeAttr('disabled');
+                $("#_submit_id").attr('disabled','disabled');
+            } else {
+                $("#_device_id").attr('disabled','disabled');
+                $("#_submit_id").removeAttr('disabled');
+            }
+            $("#_device_id").val("");
+        });
+
+        $(".sell").click(function() {
+            $("#_plan_id").val($(this).attr("param_plan"));
+            $("#_plan_number").val($(this).attr("param_number"));
+            $("#myModal").modal();
+        });
+    });
+</script>

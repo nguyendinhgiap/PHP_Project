@@ -1,0 +1,403 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading"></div>
+        <div class="row wrapper"></div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-12">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}" method="POST"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <input type="hidden" name="id" value="{{ items["id"] }}">
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <h3>Overview</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Name</label>
+                                        <input type="text" class="form-control" id="name_id" name="name"
+                                               value="{{ items["name"] }}" placeholder="Name">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Nickname</label>
+                                        <input type="text" class="form-control" id="nickname_id" name="nickname"
+                                               value="{{ items["nickname"] }}" placeholder="Nickname">
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="control-label sm">Color</label>
+                                        <input type="text" class="form-control" id="color_id" name="color"
+                                               value="{{ items["color"] }}" placeholder="Color">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Manager</label><br>
+                                        {% for _name, _define in db %}
+                                            {% if _name == "manager_id" %}
+                                                {% set _value = items["manager_id"] %}
+                                                {% include "cms/component/item.twig" %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Stadium</label><br>
+                                        {% for _name, _define in db %}
+                                            {% if _name == "stadium_id" %}
+                                                    {% set _value = items["stadium_id"] %}
+                                                    {% include "cms/component/item.twig" %}
+                                            {% endif %}
+                                        {% endfor %}
+
+                                        {#<select id="{{ _sId~_name }}" class="form-control" name="_{{ _name }}" {{ _readonly_ == "readonly" ? "disabled" : "" }}>#}
+
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <label class="control-label sm">Sport</label>
+                                        {% for _name, _define in db %}
+                                            {#{% if _define.creation %}#}
+                                            {% if _name == "sport_id" %}
+                                                {#<div class="form-group">#}
+                                                {% set _value = items["sport_id"] %}
+                                                {% include "cms/component/item.twig" %}
+                                                {#</div>#}
+
+                                            {% endif %}
+
+                                            {#</div>#}
+                                            {#{% endif %}#}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Website</label>
+                                        <input type="text" class="form-control" id="website_id" name="website"
+                                               value="{{ items["website"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                {#<label class="col-sm-2 control-label">Status</label>#}
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <select name="status" id="status_id">
+                                            <option value="active" {{ items["status"] == 'active' ? 'selected="selected"' }}>
+                                                Active
+                                            </option>
+                                            <option value="block" {{ items["status"] == 'block' ? 'selected="selected"' }}>
+                                                Block
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                {#<label class="col-sm-2 control-label">Status</label>#}
+                                <div class="row">
+
+                                    <div class="col-md-5">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                            <span class="btn btn-primary btn-file">
+                                            Browse &hellip; <input type="file" id="{{ _sId~_name }}" name="_{{ _name }}"
+                                                                   accept="image/*"
+                                                                   onchange="setFileInfo_{{ _sId~_name }}(this.files)">
+                                            </span>
+                                            </span>
+                                            <input type="text" class="form-control cms_file" id="{{ _sId~_name }}_text"
+                                                   readonly>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Description</label>
+                                        {#<input type="text" class="form-control" id="description_id" name="description"#}
+                                        {#value="{{ items["description"] }}" placeholder="">#}
+
+                                        <textarea name="description" id="description_id" class="form-control" rows="3"
+                                                  placeholder="">{{ items["description"] }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Tags</label>
+                                        <input type="text" class="form-control" id="tags_id" name="tags"
+                                               value="{{ items["tags"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                {#<div class="line line-dashed b-b line-lg pull-in"></div>#}
+                                <h3>Contact</h3>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Phone</label>
+                                        <input type="text" class="form-control" id="phone_id" name="phone"
+                                               value="{{ items["phone"] }}" placeholder="">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Email</label>
+                                        <input type="text" class="form-control" id="email_id" name="email"
+                                               value="{{ items["email"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Address</label>
+                                        <textarea name="address" id="address_id" class="form-control" rows="3"
+                                                  placeholder="">{{ items["address"] }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">City</label>
+                                        <input type="text" class="form-control" id="city_id" name="city"
+                                               value="{{ items["city"] }}" placeholder="">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Zip code</label>
+                                        <input type="text" class="form-control" id="zipcode_id" name="zipcode"
+                                               value="{{ items["zipcode"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Province</label>
+                                        <input type="text" class="form-control" id="province_id" name="province"
+                                               value="{{ items["province"] }}" placeholder="">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Country</label>
+                                        <input type="text" class="form-control" id="country_id" name="country"
+                                               value="{{ items["country"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                {#<div class="line line-dashed b-b line-lg pull-in"></div>#}
+                                <h3>More</h3>
+                            </div>
+                        </div>
+
+                        {#<div class="line line-dashed b-b line-lg pull-in"></div>#}
+                        {#<h4>More</h4>#}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Facebook URL</label>
+                                        <input type="text" class="form-control" id="facebook_id" name="facebook"
+                                               value="{{ items["facebook"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Twitter URL</label>
+                                        <input type="text" class="form-control" id="twitter_id" name="twitter"
+                                               value="{{ items["twitter"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Instagram URL</label>
+                                        <input type="text" class="form-control" id="instagram_id" name="instagram"
+                                               value="{{ items["instagram"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Youtube URL</label>
+                                        <input type="text" class="form-control" id="youtube_id" name="youtube"
+                                               value="{{ items["youtube"] }}" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <button type="submit" class="btn btn-success" name="action" value="editting">
+                                            Save
+                                        </button>
+                                        <button class="btn btn-default"
+                                                onclick="window.location='{{ main_url }}{{ form }}';return false;">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(".form_datetime").datetimepicker({
+        format: "dd MM yyyy - hh:ii"
+    });
+</script>
+
+<script>
+    function setFileInfo_{{ _sId~_name }}(files) {
+        $("#{{ _sId~_name }}_text").val(files[0].name);
+    }
+</script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#stadium_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/stadium'
+        });
+
+        $('#manager_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/manager'
+        });
+
+        $('#sport_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/sport'
+        });
+
+
+        $('#province_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/province'
+        });
+        $('#city_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/city'
+        });
+
+        $('select').multiselect({
+            enableFiltering: false
+        });
+
+        $('#autocomplete').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/system/search_customer',
+            onSelect: function (data) {
+                $("#first_name_id").val(data.data["first_name"]);
+                $("#last_name_id").val(data.data["last_name"]);
+                $("#email_id").val(data.data["email"]);
+                $("#phone_id").val(data.data["phone"]);
+                $('#gender_id').multiselect('select', [data.data["gender"]]);
+                $('#gender_id').multiselect('refresh');
+                $("#address_id").val(data.data["address_m"]);
+                $("#city_id").val(data.data["city"]);
+                $("#country_id").val(data.data["country"]);
+                $("#zipcode_id").val(data.data["zipcode"]);
+                $("#province_id").val(data.data["province"]);
+            }
+        });
+    });
+</script>

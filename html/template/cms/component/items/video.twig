@@ -1,0 +1,57 @@
+{% if _value != null %}
+    {#<video width="50%" controls>#}
+        {#<source src="{{ _value }}" type="video/mp4">#}
+    {#</video>#}
+    {#<br/>#}
+    {#{% if _value_download!= null and _value_download|length > 0 %}#}
+        {#<a href="{{ _value_download }}" class="btn btn-primary btn-lg active" role="button" download>Tải về</a>#}
+    {#{% endif %}#}
+    <video width="50%" controls>
+        <source src="{{ main_url }}/dl/stream/{{ items[pkey] }}" type="video/mp4">
+    </video>
+    <br/>
+    {% if _value_download!= null and _value_download|length > 0 %}
+        <a href="{{ main_url }}/dl/download/{{ items[pkey] }}" class="btn btn-primary btn-lg active" role="button" download>Tải về</a>
+    {% endif %}
+{% endif %}
+{% if _readonly_ != "readonly" %}
+    {% set _req_ = _define.nullable ? "" : "required" %}
+
+    <script>
+        var VIDEO_DURATION_LIMIT = {{ _define.duration_limit|length > 0 ? _define.duration_limit : -1 }};
+        window.URL = window.URL || window.webkitURL;
+        function setFileInfo_{{ _sId~_name }}(files) {
+            $("#{{ _sId~_name }}_text").val(files[0].name);
+
+            var video = document.createElement('video');
+            video.preload = 'metadata';
+            video.src = URL.createObjectURL(files[0]);
+            video.onloadedmetadata = function() {
+                window.URL.revokeObjectURL(this.src)
+                if (video.duration > VIDEO_DURATION_LIMIT && VIDEO_DURATION_LIMIT > 0) {
+                    $('#{{ _sId~_name }}_error').html("<strong>Error!</strong> Video bạn vừa chọn có độ dài " + video.duration + " giây, vượt quá giới hạn " + VIDEO_DURATION_LIMIT + " giây của hệ thống!");
+                    $("#{{ _sId~_name }}_error").show();
+
+                    $("#{{ _sId~_name }}").val('');
+                } else {
+                    $("#{{ _sId~_name }}_error").hide();
+                    $("#{{ _sId~_name }}_duration").val(video.duration);
+                }
+            }
+        }
+    </script>
+    <input type="hidden" name="_duration" id="{{ _sId~_name }}_duration">
+    <div class="alert alert-danger" id="{{ _sId~_name }}_error" style="display:none;"></div>
+    <div class="input-group">
+        <span class="input-group-btn">
+            <span class="btn btn-primary btn-file" id="{{ _sId~_name }}_span">
+                Browse &hellip; <input type="file"  id="{{ _sId~_name }}" name="_{{ _name }}" accept="{{ _define.mimetype }}" {{ _req_ }}  onchange="setFileInfo_{{ _sId~_name }}(this.files)">
+            </span>
+        </span>
+        {% if _define.duration_limit|length > 0 %}
+            <input type="text" class="form-control cms_file" readonly id="{{ _sId~_name }}_text" placeholder=" Tư liệu upload phải có độ dài không quá {{ _define.duration_limit }} giây">
+        {% else %}
+            <input type="text" class="form-control cms_file" readonly id="{{ _sId~_name }}_text">
+        {% endif %}
+    </div>
+{% endif %}

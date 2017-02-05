@@ -1,0 +1,41 @@
+{% set _link_class_ = '_modal_link_' %}
+
+{% if isSearch %}
+    {% include "cms/component/search.twig" %}
+{% endif %}
+
+{% if isQuickCreate %}
+    {% include "cms/component/creation_quick.twig" %}
+{% endif %}
+
+{% if error_message|length > 0 %}
+    <br>
+    <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+{% endif %}
+{% if notice_message|length > 0 %}
+    <br>
+    <div class="alert alert-success" role="alert">{{ notice_message }}</div>
+{% endif %}
+
+{% if type == 'list' %}
+    {% include "cms/component/list.twig" %}
+{% endif %}
+{% if type == 'create' %}
+    {% include "cms/component/creation.twig" %}
+{% endif %}
+{% if type == 'display' %}
+    {% include "cms/component/detail.twig" %}
+{% endif %}
+{% if type == 'edit' %}
+    {% include "cms/component/edit.twig" %}
+{% endif %}
+{% if type == 'search' %}
+    {% include "cms/component/search_result.twig" %}
+{% endif %}
+
+<script>
+    $('._modal_link_').click(function(e) {
+        e.preventDefault();
+        loadModal($(this).attr("href"));
+    });
+</script>

@@ -1,0 +1,69 @@
+{% if detailForm|length == 0 %}
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">Detail</div>
+            <div class="row wrapper">
+            </div>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST">
+                        <input type="hidden" name="{{ pkey }}" value="{{ items[pkey] }}">
+                        {% set _readonly_ = "readonly" %}
+                        {% for _name, _define in db %}
+                            {% if _define.display and (_define.condition == null or items[_define.condition.k] == _define.condition.v) %}
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" >{{ _define.alias }}:</label>
+                                    <div class="col-sm-10">
+                                        {% set _value = items[_name] %}
+                                        {% set _value_download = items[_name~"_download"] %}
+                                        {% include "cms/component/item.twig" %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                {% if isEdit and isDetail_EditButton %}
+                                    <button type="submit" class="btn btn-warning" name="action" value="edit">{{ edit_title }}</button>
+                                {% endif %}
+                                <button class="btn btn-default" onclick="onclick="window.location='{{ main_url }}{{ form }}';return false;">Cancel</button>
+                                {% if isMore %}
+                                    <button class="btn btn-primary" onclick="window.location='{{ main_url }}{{ more_uri~items[pkey]~"/"~items["name"] }}';return false;">{{ more_title }}</button>
+                                {% endif %}
+                                {% if isDelete %}
+                                    <button type="button" class="btn btn-danger" onclick="onDelete();return false;">Delete</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                    <script>
+                        function onDelete() {
+                            if (confirm('{{ delete_notice }}')) {
+                                window.location='{{ main_url }}{{ form }}?action=delete&{{ pkey }}={{ items[pkey] }}';
+                            } else {
+                                // Do nothing!
+                            }
+                        }
+                    </script>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function onDelete() {
+            if (confirm('{{ delete_notice }}')) {
+                window.location='{{ main_url }}{{ form }}?action=delete&{{ pkey }}={{ items[pkey] }}';
+            } else {
+                // Do nothing!
+            }
+        }
+    </script>
+
+{% else %}
+    {% include detailForm %}
+{% endif %}

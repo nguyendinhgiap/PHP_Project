@@ -1,0 +1,38 @@
+{% if createForm|length == 0 %}
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Creation</div>
+        <div class="row wrapper">
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                    {% for _name, _define in db %}
+                        {% if _define.creation %}
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" >{{ _define.alias }}:</label>
+                                <div class="col-sm-10">
+                                    {% set _value = items[_name] %}
+                                    {% include "cms/component/item.twig" %}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default" name="action" value="creating">Create</button>
+                            <button class="btn btn-default" onclick="window.location='{{ main_url }}{{ form }}';return false;">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% else %}
+    {% include createForm %}
+{% endif %}
+
+

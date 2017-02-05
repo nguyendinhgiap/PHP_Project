@@ -1,0 +1,163 @@
+<!-- header -->
+<header id="header" class="app-header navbar" role="menu">
+<!-- navbar header -->
+<div class="navbar-header bg-dark">
+    <button class="pull-right visible-xs dk" ui-toggle-class="show" target=".navbar-collapse">
+        <i class="glyphicon glyphicon-cog"></i>
+    </button>
+    <button class="pull-right visible-xs" ui-toggle-class="off-screen" target=".app-aside" ui-scroll="app">
+        <i class="glyphicon glyphicon-align-justify"></i>
+    </button>
+    <!-- brand -->
+    <a href="#/" class="navbar-brand text-lt">
+        {#<i class="fa fa-btc"></i>#}
+        <img src="img/logo.png" alt="." class="hide">
+        <span class="hidden-folded m-l-xs">EASYOUT</span>
+    </a>
+    <!-- / brand -->
+</div>
+<!-- / navbar header -->
+
+<!-- navbar collapse -->
+<div class="collapse pos-rlt navbar-collapse box-shadow bg-white-only">
+<!-- buttons -->
+<div class="nav navbar-nav hidden-xs">
+    <a href="#" class="btn no-shadow navbar-btn" ui-toggle-class="app-aside-folded" target=".app">
+        <i class="fa fa-dedent fa-fw text"></i>
+        <i class="fa fa-indent fa-fw text-active"></i>
+    </a>
+
+</div>
+<!-- / buttons -->
+
+<!-- nabar right -->
+<ul class="nav navbar-nav navbar-right">
+    <li class="dropdown">
+        <a href="#" data-toggle="dropdown" class="dropdown-toggle clear" data-toggle="dropdown">
+            <span class="hidden-sm hidden-md">{{ SESSION_ACCOUNT.username }}</span> <b class="caret"></b>
+        </a>
+        <!-- dropdown -->
+        <ul class="dropdown-menu">
+            <li>
+                <a href="{{ main_url }}/{{ SESSION_ACCOUNT.reseller ? 'reseller' : 'admin' }}/profile">Profile</a>
+            </li>
+            <li>
+                <a href="{{ main_url }}/{{ SESSION_ACCOUNT.reseller ? 'reseller' : 'admin' }}/change_pwd">Change Password</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+                <a href="{{ main_url }}/auth/logout">Logout</a>
+            </li>
+        </ul>
+        <!-- / dropdown -->
+    </li>
+</ul>
+<!-- / navbar right -->
+</div>
+<!-- / navbar collapse -->
+</header>
+<!-- / header -->
+
+<!-- aside -->
+<aside id="aside" class="app-aside hidden-xs bg-dark">
+<div class="aside-wrap">
+<div class="navi-wrap">
+
+<!-- nav -->
+<nav ui-nav class="navi clearfix">
+<ul class="nav">
+    {% if SESSION_RULES.live %}
+        <li class="line dk hidden-folded"></li>
+
+        <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+            <span>SPORTS</span>
+        </li>
+        <li>
+            <a href="{{ main_url }}/sport/list"><i class="fa fa-futbol-o" aria-hidden="true"></i><span>Sports</span>
+            </a>
+        </li>
+
+        <li class="line dk hidden-folded"></li>
+        <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+            <span>TEAM</span>
+        </li>
+        {#<li>#}
+            {#<a href="{{ main_url }}/admin/dashboard"><i class="fa fa-tachometer" aria-hidden="true"></i><span>Dashboard</span>#}
+            {#</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/invoice/list"><i class="fa fa-inbox" aria-hidden="true"></i><span>Invoice</span>#}
+            {#</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/customer/list"><i class="fa fa-users" aria-hidden="true"></i><span>Customer</span>#}
+            {#</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/device/list"><i class="fa fa-tablet" aria-hidden="true"></i><span>Device</span>#}
+            {#</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/wallpaper/list"><i class="fa fa-picture-o" aria-hidden="true"></i><span>Wallpaper</span>#}
+            {#</a>#}
+        {#</li>#}
+        <li>
+            <a href="{{ main_url }}/team/list"><i class="fa fa-futbol-o" aria-hidden="true"></i><span>Team</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ main_url }}/match/list"><i class="fa fa-futbol-o" aria-hidden="true"></i><span>Match</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ main_url }}/stadium/list"><i class="fa fa-futbol-o" aria-hidden="true"></i><span>Stadium</span>
+            </a>
+        </li>
+
+        <li class="line dk hidden-folded"></li>
+        <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+            <span>FOOD</span>
+        </li>
+        <li>
+            <a href="{{ main_url }}/restaurant/list"><i class="fa fa-cutlery" aria-hidden="true"></i><span>Restaurant</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ main_url }}/food/list"><i class="fa fa-cutlery" aria-hidden="true"></i><span>Food</span>
+            </a>
+        </li>
+    {% endif %}
+
+    {#{% if SESSION_RULES.admin %}#}
+        {#<li class="line dk hidden-folded"></li>#}
+        {#<li class="hidden-folded padder m-t m-b-sm text-muted text-xs">#}
+            {#<span>System</span>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/system/admin"><i class="fa fa-user-circle" aria-hidden="true"></i><span>Account</span></a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/system/app"><i class="fa fa-child" aria-hidden="true"></i><span>Application</span></a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/system/version"><i class="fa fa-android" aria-hidden="true"></i><span>Version</span></a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/device/import"><i class="fa fa-upload" aria-hidden="true"></i><span>Import</span></a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ main_url }}/system/config"><i class="fa fa-cog" aria-hidden="true"></i><span>Preferences</span></a>#}
+        {#</li>#}
+    {#{% endif %}#}
+</ul>
+</nav>
+<!-- nav -->
+
+</div>
+</div>
+</aside>
+<!-- / aside -->
+

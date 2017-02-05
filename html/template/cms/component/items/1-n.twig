@@ -1,0 +1,20 @@
+<select id="{{ _sId~_name }}" name="_{{ _name }}" {{ _readonly_ == "readonly" ? "disabled" : "" }}>
+    {% if _define.nullable %}
+    <option value="">No select</option>
+    {% endif %}
+    {% for __key, __value in _define.values %}
+        {% if __key == _value %}
+        <option value="{{ __key }}" selected="selected">{{ __value }}</option>
+        {% else %}
+        <option value="{{ __key }}">{{ __value }}</option>
+        {% endif %}
+    {% endfor %}
+</select>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#{{ _sId~_name }}').multiselect({
+            enableFiltering: false
+        });
+    });
+</script>

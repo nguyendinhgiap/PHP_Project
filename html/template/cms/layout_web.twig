@@ -1,0 +1,78 @@
+{% set content_title = title %}
+{% extends "layout.twig" %}
+
+{% block ext_header %}
+    <link rel="stylesheet" href="{{ root }}/css/cms.css" type="text/css">
+    <link rel="stylesheet" href="{{ root }}/css/input-file.css">
+
+    <link rel="stylesheet" href="{{ root }}/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="{{ root }}/css/jquery.autocomplete.css">
+
+{% endblock %}
+
+{% block ext_footer %}
+    <script src="{{ root }}/js/jquery.autocomplete.min.js"></script>
+    <script src="{{ root }}/js/bootstrap-multiselect.js"></script>
+{% endblock %}
+
+{% block content %}
+    {% set _link_class_ = '' %}
+
+    <!-- content -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+            <div class="bg-light lter b-b wrapper-md">
+                {% if isSearch and searchForm|length == 0 %}
+                    <form class="navbar-form pull-right cms_search" action="{{ main_url }}{{ form }}?action=search"
+                          method="POST">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="text" name="__search_param" value="{{ search_param }}" ng-model="selected"
+                                       typeahead="state for state in states | filter:$viewValue | limitTo:8"
+                                       class="form-control input-sm bg-light no-border rounded padder"
+                                       placeholder="Search ...">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-sm bg-light rounded"><i
+                                                class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+
+                <h2 class="m-n font-thin h3"><a href="{{ main_url }}{{ form }}"><i class="fa {{ icon }}" aria-hidden="true"></i><span>   {{ content_title }}</span></a></h2>
+            </div>
+            {% if isQuickCreate %}
+                {% include "cms/component/creation_quick.twig" %}
+            {% endif %}
+
+            {% if searchForm|length > 0 %}
+                {% include searchForm %}
+            {% endif %}
+
+            {% if error_message|length > 0 %}
+                <div class="text-danger wrapper text-center">{{ error_message }}</div>
+            {% endif %}
+            {% if notice_message|length > 0 %}
+                <div class="text-success wrapper text-center">{{ notice_message }}</div>
+            {% endif %}
+
+            {% if type == 'list' %}
+                {% include "cms/component/list.twig" %}
+            {% endif %}
+            {% if type == 'create' %}
+                {% include "cms/component/creation.twig" %}
+            {% endif %}
+            {% if type == 'display' %}
+                {% include "cms/component/detail.twig" %}
+            {% endif %}
+            {% if type == 'edit' %}
+                {% include "cms/component/edit.twig" %}
+            {% endif %}
+            {% if type == 'search' %}
+                {% include "cms/component/search_result.twig" %}
+            {% endif %}
+        </div>
+    </div>
+    <!-- /content -->
+{% endblock %}

@@ -1,0 +1,114 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Search result</div>
+        <div class="row wrapper">
+            <div class="col-sm-5 m-b-xs">
+                {% if isCreate %}
+                    <button type="button" class="btn btn-sm btn-default" onclick="window.location='{{ main_url }}{{ form }}?action=create';">Create</button>
+                {% endif %}
+            </div>
+        </div>
+        {% if listForm|length == 0 %}
+        <div class="table-responsive">
+            <table class="table table-striped b-t b-light">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    {% for title in list.list_title %}
+                        <th>{{ db[title].alias }}</th>
+                    {% endfor %}
+                    {% if isEdit or isDelete or isMore %}
+                        <th style="width:120px;" class="text-center"></th>
+                    {% endif %}
+                </tr>
+                </thead>
+                {% set index_start = (list.page - 1) * list.limit %}
+                {% set index_end = index_start + list.data.list|length %}
+                {% set index = index_start %}
+                <tbody>
+                {% for data in list.data.list %}
+                    {% set index = index + 1 %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        {% for title in list.list_title %}
+                            {% set __is_play__ = false %}
+                            <td>
+                                {% if isDetail and db[title].lst_link %}
+                                <a href="{{ main_url }}{{ form }}?action=detail&{{ pkey }}={{ data[pkey] }}" class="{{ _link_class_ }}">
+                                    {% endif %}
+                                    {% if db[title].type == '1-n' %}
+                                        {% set __is_play__ = true %}
+                                        {{ db[title].values[data[title]] }}
+                                    {% endif %}
+                                    {% if __is_play__ == false %}
+                                        {% if db[title].lst_len_limit > 0 and data[title]|length > db[title].lst_len_limit %}
+                                            {{ data[title]|slice(0, db[title].lst_len_limit) ~ "..." }}
+                                        {% else %}
+                                            {{ data[title] }}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if isDetail and db[title].lst_link %}
+                                </a>
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                        {% if isEdit or isDelete or isMore %}
+                            <td class="text-center">
+                                {% if isDetail %}
+                                    <a href="{{ main_url }}{{ form }}?action=detail&{{ pkey }}={{ data[pkey] }}" data-toggle="tooltip" data-placement="top" title="Detail">
+                                        <i class="glyphicon glyphicon-info-sign text-info"></i>&nbsp;
+                                    </a>
+                                {% endif %}
+                                {% if isEdit %}
+                                    <a href="{{ main_url }}{{ form }}?action=edit&{{ pkey }}={{ data[pkey] }}" data-toggle="tooltip" data-placement="top" title="Edit">
+                                        <i class="glyphicon glyphicon-edit text-warning"></i>&nbsp;
+                                    </a>
+                                {% endif %}
+                                {% if isDelete %}
+                                    <a href="{{ main_url }}{{ form }}?action=delete&{{ pkey }}={{ data[pkey] }}" data-toggle="tooltip" data-placement="top" title="Delete" onclick="return confirm('{{ delete_notice }}')">
+                                        <i class="glyphicon glyphicon-trash text-danger"></i>&nbsp;
+                                    </a>
+                                {% endif %}
+                                {% if isMore %}
+                                    <a href="{{ main_url }}{{ more_uri~data[pkey]~"/"~data["name"] }}" data-toggle="tooltip" data-placement="top" title="{{ more_title }}">
+                                        <i class="glyphicon glyphicon-arrow-right text-primary"></i>&nbsp;
+                                    </a>
+                                {% endif %}
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            {% include listForm %}
+        {% endif %}
+        <footer class="panel-footer">
+            <div class="row">
+                <div class="col-sm-4 hidden-xs">
+                    {% if isCreate %}
+                        <button type="button" class="btn btn-sm btn-default" onclick="window.location='{{ main_url }}{{ form }}?action=create';">Create</button>
+                    {% endif %}
+                </div>
+                <div class="col-sm-4 text-center">
+                    <small class="text-muted inline m-t-sm m-b-sm">showing {{ index_start + 1 }}-{{ index_end }} of {{ list.data.total }} items</small>
+                </div>
+                <div class="col-sm-4 text-right text-center-xs">
+                    {% if list.page > 1 or list.data.next %}
+                        <ul class="pagination pagination-sm m-t-none m-b-none">
+                            {% if list.page > 1 %}
+                                <li><a href="{{ main_url }}{{ form }}?action=search&page={{ list.page - 1 }}&{{ query }}"><i class="fa fa-chevron-left"></i></a></li>
+                            {% endif %}
+                            <li class="active"><a href>{{ list.page }}</a></li>
+                            {% if list.data.next %}
+                                <li><a href="{{ main_url }}{{ form }}?action=search&page={{ list.page + 1 }}&{{ query }}"><i class="fa fa-chevron-right"></i></a></li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>

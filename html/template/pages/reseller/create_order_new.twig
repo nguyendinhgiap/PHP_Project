@@ -1,0 +1,138 @@
+{% extends "layout.twig" %}
+{% set content_title = 'Create Order' %}
+
+{% block ext_header %}
+    <link rel="stylesheet" href="{{ root }}/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="{{ root }}/css/jquery.autocomplete.css">
+{% endblock %}
+
+{% block ext_footer %}
+    <script src="{{ root }}/js/jquery.autocomplete.min.js"></script>
+    <script src="{{ root }}/js/bootstrap-multiselect.js"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- content -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+
+
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">{{ content_title }}</h1>
+            </div>
+            <div class="wrapper-md" ng-controller="FormDemoCtrl">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="{{ main_url }}/reseller/create_order" method="POST">
+                            <div class="text-success wrapper text-center" ng-show="authError">{{ success_message }}</div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Devices</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <input type="number" step="1" class="form-control" name="devices" value="0" required="required">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Plans</label>
+                                <div class="col-sm-10" id="plan_id">
+                                    <div class="row" id="plan_item">
+                                        <div class="col-md-2">
+                                            <input type="number" step="1" class="form-control" name="c_plan_1" value="0" placeholder="Number" required="required">
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="plan_1" class="plan">
+                                                {% for plan in plans %}
+                                                    <option value="{{ plan.id }}">{{ plan.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <select name="n_plan_1" class="duration">
+                                                <option value="1">1 month</option>
+                                                <option value="3">3 months</option>
+                                                <option value="6">6 months</option>
+                                                <option value="12">12 months</option>
+                                                <option value="24">24 months</option>
+                                                
+                                                <!--
+                                                {% for i in range(1, 12) %}
+                                                    <option value="{{ i }}">{{ i }} (months)</option>
+                                                {% endfor %}
+                                                -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row" id="plan_more">
+                                        <div class="col-md-2">
+                                            <button class="btn btn-info btn-sm" id="more_plan_id">
+                                                <i class="fa fa-plus text"></i>
+                                                <span class="text"> More Plan</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-primary" name="action" value="create">Create Order</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- /content -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#plan_item").find("select").multiselect({
+                enableFiltering: false,
+                buttonWidth: '100%'
+            });
+
+            $('form').submit(function () {
+//                if ($( "#plan_id" ).val() == -1 && $( "#device_id" ).val() == "no") {
+//                    alert("You must order device or Plan or both!");
+//                    return false;
+//                }
+            });
+
+            $("#more_plan_id").click(function(event) {
+                // add new plan
+                var $nNode = $("#plan_item").clone();
+
+                $("#plan_item").removeAttr("id");
+
+                $name = $nNode.find("select.plan").attr("name");
+                $name_arr = $name.split("_");
+                $name = $name_arr[0].concat("_", parseInt($name_arr[1]) + 1);
+                $nNode.find("select.plan").attr("name", $name);
+                $nNode.find("select.duration").attr("name", "n_" + $name);
+                $nNode.find("input").attr("name", "c_" + $name);
+                $nNode.find("input").val("0");
+                $nNode.find(".multiselect").parent().remove();
+
+                $nNode.insertBefore("#plan_more");
+                $("<br>").insertBefore("#plan_more");
+
+                $("#plan_item").find("select").multiselect({
+                    enableFiltering: false,
+                    buttonWidth: '100%'
+                });
+
+
+                event.preventDefault();
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

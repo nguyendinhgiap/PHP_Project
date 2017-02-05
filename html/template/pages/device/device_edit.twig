@@ -1,0 +1,444 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Device Detail</div>
+        <div class="row wrapper">
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}" method="POST"
+                      enctype="multipart/form-data">
+                    <div class="form-group">
+                        <h4>Overview</h4>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="control-label sm">#ID</label>
+                                        <input type="text" class="form-control" value="{{ items["device_id"] }}"
+                                               readonly="readonly">
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label class="control-label sm">Status</label><br/>
+                                        <select name="status" id="status">
+                                            <option value="active" {{ items["status"] == 'active' ? 'selected="selected"' }}>
+                                                Active
+                                            </option>
+                                            <option value="block" {{ items["status"] == 'block' ? 'selected="selected"' }}>
+                                                Block
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {#<label class="control-label col-sm-2">Creation date</label>#}
+                            {#<div class="col-sm-2">#}
+                            {#<input type="text" class="form-control" value="{{ items["datetime"] }}"#}
+                            {#readonly="readonly">#}
+                            {#</div>#}
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label sm">Sold by</label><br/>
+                                        <select name="sold_by" id="_sold_by">
+                                            <option value="admin" {{ items["sold_by"] == 'admin' ? 'selected="selected"' }}>
+                                                Admin
+                                            </option>
+                                            <option value="michael" {{ items["sold_by"] == 'michael' ? 'selected="selected"' }}>
+                                                Michael Alleyne
+                                            </option>
+                                            <option value="nguyen" {{ items["sold_by"] == 'nguyen' ? 'selected="selected"' }}>
+                                                Khai Nguyen
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group has-success">
+                            {#<label class="control-label col-sm-2">Status</label>#}
+                            {#<div class="col-sm-2">#}
+                            {#<input type="text" class="form-control" value="{{ items["status"] }}"#}
+                            {#readonly="readonly">#}
+                            {#</div>#}
+                            {#<label class="control-label col-sm-2">Active date</label>#}
+                            {#<div class="col-sm-2">#}
+                            {#<input type="text" class="form-control" value="{{ items["active_datetime"] }}"#}
+                            {#readonly="readonly">#}
+                            {#</div>#}
+                            {#<label class="control-label col-sm-1">Reseller</label>#}
+                            {#<div class="col-sm-2">#}
+                            {#<input type="text" class="form-control" value="{{ items["reseller_name"] }}"#}
+                            {#readonly="readonly">#}
+                            {#</div>#}
+                        </div>
+
+                        {# CUSTOMER INFORMATION #}
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <h4>Customer</h4>
+                        <input type="hidden" name="id" value="{{ items["id"] }}">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">First name</label>
+                                        <input type="text" class="form-control" id="first_name_id" name="first_name"
+                                               value="{{ items["customer_first_name"] }}" placeholder="First name">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Last name</label>
+                                        <input type="text" class="form-control" id="last_name_id" name="last_name"
+                                               value="{{ items["customer_last_name"] }}" placeholder="Last name">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label sm">Email</label>
+                                        <input type="email" class="form-control" id="autocomplete" name="email"
+                                               value="{{ items["customer_email"] }}" placeholder="Email">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Phone</label>
+                                        <input type="text" class="form-control" id="phone_id" name="phone"
+                                               value="{{ items["customer_phone"] }}" placeholder="Phone">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <label class="control-label sm">Gender</label>
+                                        <select name="gender" id="gender_id">
+                                            <option value="male" {{ items["customer_gender"] == 'male' ? 'selected="selected"' }}>
+                                                Male
+                                            </option>
+                                            <option value="female" {{ items["customer_gender"] == 'female' ? 'selected="selected"' }}>
+                                                Female
+                                            </option>
+                                            <option value="other" {{ items["customer_gender"] == 'other' ? 'selected="selected"' }}>
+                                                other
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Address</label>
+                                        <textarea name="address" id="address_id" class="form-control" rows="3"
+                                                  placeholder="Address">{{ items["customer_address"] }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label sm">City</label>
+                                        <input type="text" class="form-control" id="city_id" name="city"
+                                               value="{{ items["customer_city"] }}" placeholder="City">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Zip/Postal code</label>
+                                        <input type="text" class="form-control" name="zipcode" id="zipcode_id"
+                                               value="{{ items["customer_zipcode"] }}" placeholder="Postal/Zip Code">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Province</label>
+                                        <input type="text" class="form-control" id="provice_id" name="province"
+                                               value="{{ items["customer_province"] }}" placeholder="Province">
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label class="control-label sm">Country</label>
+                                        <input type="text" class="form-control" id="country_id" name="country"
+                                               value="{{ items["customer_country"] }}" placeholder="Country">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <button type="submit" class="btn btn-success" name="action" value="editting">
+                                            Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+
+                        {# App info #}
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <h4>App</h4>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label class="control-label sm">Version name</label>
+                                        <input type="text" class="form-control" value="{{ items["version_name"] }}"
+                                               readonly="readonly" placeholder="Name">
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Version code</label>
+                                        <input type="text" class="form-control" value="{{ items["version_code"] }}"
+                                               readonly="readonly" placeholder="Code">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {# MORE #}
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <h4>Device</h4>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">MAC</label>
+                                        <input type="text" class="form-control" value="{{ items["mac"]|upper }}"
+                                               readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">IP</label>
+                                        <input type="text" class="form-control" value="{{ items["ip"]|upper }}"
+                                               readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Platform</label>
+                                        <input type="text" class="form-control" value="{{ items["platform"] }}"
+                                               readonly="readonly" placeholder="Version">
+                                        {#<select name="platform" id="platform">#}
+                                        {#<option value="android" {{ items["platform"] == 'android' ? 'selected="selected"' }}>#}
+                                        {#Android#}
+                                        {#</option>#}
+                                        {#<option value="other" {{ items["platform"] == 'other' ? 'selected="selected"' }}>#}
+                                        {#Other#}
+                                        {#</option>#}
+                                        {#</select>#}
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="control-label sm">Version</label>
+                                        <input type="text" class="form-control" value="{{ items["version"] }}"
+                                               readonly="readonly" placeholder="Version">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="control-label sm">SDK INT</label>
+                                        <input type="text" class="form-control" value="{{ items["version_int"] }}"
+                                               readonly="readonly" placeholder="SDK INT">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label class="control-label sm">Manufacture</label>
+                                        <input type="text" class="form-control" value="{{ items["manufacture"] }}"
+                                               readonly="readonly" placeholder="Manufacture">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label class="control-label sm">Model</label>
+                                        <input type="text" class="form-control" value="{{ items["model"] }}"
+                                               readonly="readonly" placeholder="Model">
+                                    </div>
+
+                                    <div class="col-md-3">
+                                        <label class="control-label sm">Bootloader</label>
+                                        <input type="text" class="form-control" value="{{ items["bootloader"] }}"
+                                               readonly="readonly" placeholder="Bootloader">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <label class="control-label sm">Fingerprint</label>
+                                        {#<textarea type="text" rows="3" class="form-control"#}
+                                        {#value="{{ items["fingerprint"] }}"#}
+                                        {#readonly="readonly" placeholder="Fingerprint">#}
+                                        {#</textarea>#}
+
+                                        <textarea disabled name="address" id="address_id" class="form-control" rows="3"
+                                                  placeholder="Address">{{ items["fingerprint"] }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Latitude</label>
+                                        <input type="text" class="form-control" value="{{ items["latitude"] }}"
+                                               readonly="readonly" placeholder="Latitude">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Longitude</label>
+                                        <input type="text" class="form-control" value="{{ items["longitude"] }}"
+                                               readonly="readonly" placeholder="Longitude">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">City</label>
+                                        <input type="text" class="form-control" value="{{ items["city"] }}"
+                                               readonly="readonly" placeholder="City">
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <label class="control-label sm">Country</label>
+                                        <input type="text" class="form-control" value="{{ items["country"] }}"
+                                               readonly="readonly" placeholder="Country">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-10">
+                                <div class="row">
+
+                                    <div class="col-md-3">
+                                        <button type="submit" class="btn btn-rounded btn-md btn-primary" name="action"
+                                                value="editting">
+                                            Update Info
+                                        </button>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <button class="btn btn-rounded btn-md btn-info"
+                                                onclick="window.open('https://maps.google.com?q=');return false;">
+                                            <i class="fa fa-fw fa-map-o"></i>
+                                            View On Maps
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#country_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/country'
+        });
+        $('#province_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/province'
+        });
+        $('#city_id').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/city'
+        });
+
+
+        $('select').multiselect({
+            enableFiltering: false
+        });
+
+        $('#autocomplete').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/system/search_customer',
+            onSelect: function (data) {
+                $("#first_name_id").val(data.data["first_name"]);
+                $("#last_name_id").val(data.data["last_name"]);
+                $("#phone_id").val(data.data["phone"]);
+                $('#gender_id').multiselect('select', [data.data["gender"]]);
+                $('#gender_id').multiselect('refresh');
+                $("#city_id").val(data.data["city"]);
+                $("#address_id").val(data.data["address"]);
+                $("#country_id").val(data.data["country"]);
+                $("#zipcode_id").val(data.data["zipcode"]);
+                $("#province_id").val(data.data["province"]);
+            }
+        });
+    });
+</script>

@@ -1,0 +1,186 @@
+{% extends "layout.twig" %}
+{% set content_title = 'Create Order' %}
+
+{% block ext_header %}
+    <link rel="stylesheet" href="{{ root }}/css/bootstrap-multiselect.css">
+    <link rel="stylesheet" href="{{ root }}/css/jquery.autocomplete.css">
+{% endblock %}
+
+{% block ext_footer %}
+    <script src="{{ root }}/js/jquery.autocomplete.min.js"></script>
+    <script src="{{ root }}/js/bootstrap-multiselect.js"></script>
+{% endblock %}
+
+{% block content %}
+    <!-- content -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+
+
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">{{ content_title }}</h1>
+            </div>
+            <div class="wrapper-md" ng-controller="FormDemoCtrl">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="{{ main_url }}/reseller/create_order" method="POST">
+                            <div class="text-success wrapper text-center" ng-show="authError">{{ success_message }}</div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Order device</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select name="device" id="device_id">
+                                                <option value="yes">Order device</option>
+                                                <option value="no">None</option>
+                                            </select>
+                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Order Plan</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <select name="plan" id="plan_id">
+                                                {% for plan in plans %}
+                                                    <option value="{{ plan.id }}">{{ plan.name }}</option>
+                                                {% endfor %}
+                                                <option value="-1">None</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label"></label>
+                                <div class="col-sm-10">
+                                    <div class="checkbox">
+                                        <label class="i-checks">
+                                            <input type="checkbox" value="true" name="customer_info" id="customer_info_id" checked="checked">
+                                            <i></i>
+                                            Customer Information
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Phone</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control c_info" name="phone" id="autocomplete" placeholder="Phone" required="required">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input type="text" id="first_name_id" class="form-control c_info" name="first_name" placeholder="First name" required="required">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" id="last_name_id" class="form-control c_info" name="last_name" placeholder="Last name" required="required">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Email</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="email" id="email_id" class="form-control c_info" name="email" placeholder="Email">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Sex</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <select name="sex"  id="sex_id">
+                                                <option value="male">Male</option>
+                                                <option value="female">Female</option>
+                                                <option value="other">other</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Address</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <textarea name="address" class="form-control c_info" rows="3" id="address_id" placeholder="Address"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="line line-dashed b-b line-lg pull-in"></div>
+                            <div class="form-group">
+                                <div class="col-sm-4 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-primary" name="action" value="create">Create Order</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <!-- /content -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('select').multiselect({
+                enableFiltering: false
+            });
+
+            $('#autocomplete').devbridgeAutocomplete({
+                serviceUrl: '{{ main_url }}/reseller/search_customer',
+                onSelect: function (data) {
+//                    console.log(data);
+                    $("#first_name_id").val(data.data["first_name"]);
+                    $("#last_name_id").val(data.data["last_name"]);
+                    $("#email_id").val(data.data["email"]);
+                    $("#address_id").val(data.data["address"]);
+                    $('#sex_id').multiselect('select', [data.data["sex"]]);
+                    $('#sex_id').multiselect('refresh');
+                }
+            });
+
+            $(window).keydown(function(event){
+                if((event.which == 13) && ($(event.target)[0] == $("#autocomplete")[0])) {
+                    event.preventDefault();
+                    return false;
+                }
+            });
+
+            $("#customer_info_id").change(function() {
+                if(this.checked) {
+                    $(".c_info").removeAttr('disabled');
+                    $("#sex_id").multiselect('enable')
+                } else {
+                    $(".c_info").attr('disabled','disabled');
+                    $("#sex_id").multiselect('disable')
+                }
+            });
+
+            $('form').submit(function () {
+                if ($( "#plan_id" ).val() == -1 && $( "#device_id" ).val() == "no") {
+                    alert("You must order device or Plan or both!");
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}

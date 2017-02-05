@@ -1,0 +1,39 @@
+<div class="modal fade" id="_CMS_MODEL_" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Choose File</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function initModal(title, url, onFinishCallback) {
+        $("#exampleModalLabel").text(title);
+        loadModal(url);
+        $('#_CMS_MODEL_').on('hidden.bs.modal', function () {
+            onFinishCallback();
+        })
+    }
+    function loadModal(url) {
+//        alert (url);
+        $("#_CMS_MODEL_ .modal-body").load(url, function() {
+            $("#_CMS_MODEL_").modal("show");
+        });
+    }
+    function loadModal_(url, param) {
+        $("#_CMS_MODEL_ .modal-body").load(url, param, function() {
+            $("#_CMS_MODEL_").modal("show");
+        });
+    }
+    function hideModal() {
+        $("#_CMS_MODEL_").modal("hide");
+    }
+</script>

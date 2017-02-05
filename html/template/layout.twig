@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" class="">
+<head>
+    <meta charset="utf-8" />
+    <title>{{ content_title }}</title>
+    <meta name="description" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="{{ root }}/libs/assets/animate.css/animate.css" type="text/css" />
+    <link rel="stylesheet" href="{{ root }}/libs/assets/font-awesome/css/font-awesome.min.css" type="text/css" />
+    <link rel="stylesheet" href="{{ root }}/libs/assets/simple-line-icons/css/simple-line-icons.css" type="text/css" />
+    <link rel="stylesheet" href="{{ root }}/libs/jquery/bootstrap/dist/css/bootstrap.css" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ root }}/css/font.css" type="text/css" />
+    <link rel="stylesheet" href="{{ root }}/css/app.css" type="text/css" />
+    <link rel="stylesheet" href="{{ root }}/css/bootstrap-datetimepicker.min.css" type="text/css" />
+
+    {% block ext_header %} {% endblock %}
+
+    <script src="{{ root }}/libs/jquery/jquery/dist/jquery.js"></script>
+    <script src="{{ root }}/libs/jquery/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="{{ root }}/js/ui-load.js"></script>
+    <script src="{{ root }}/js/ui-jp.config.js"></script>
+    <script src="{{ root }}/js/ui-jp.js"></script>
+    <script src="{{ root }}/js/ui-nav.js"></script>
+    <script src="{{ root }}/js/ui-toggle.js"></script>
+    <script src="{{ root }}/js/ui-client.js"></script>
+    <script src="{{ root }}/js/bootstrap-datetimepicker.js"></script>
+    {% block ext_footer %} {% endblock %}
+</head>
+<body>
+<div class="app app-header-fixed ">
+    {% if hide_menu == false %}
+        {% include "menu.twig" %}
+    {% endif %}
+
+    {% block content %} {% endblock %}
+</div>
+
+
+</body>
+</html>

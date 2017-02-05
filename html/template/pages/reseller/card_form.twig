@@ -1,0 +1,133 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Detail</div>
+        <div class="row wrapper">
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="editting">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Plan</label>
+                            <div class="col-sm-8">
+                                <input type="text" class="form-control" name="id" value="{{ items["plan_name"] }} ({{ items["plan_number"] }} months)" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group has-success">
+                            <label class="control-label col-sm-2" >Code</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="id" value="{{ items["code"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Status</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="id" value="{{ items["status"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Sold date</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="id" value="{{ items["sold_datetime"] }}" readonly="readonly">
+                            </div>
+                            <label class="control-label col-sm-2" >Active date</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="id" value="{{ items["active_datetime"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Device MAC</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" name="id" value="{{ items["device_id"] is null ? "No device" : items["device_mac"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        {% if items["customer_id"] is null %}
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" >Customer</label>
+                                <div class="col-sm-3">
+                                    <input type="text" class="form-control" name="id" value="No customer" readonly="readonly">
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Customer phone</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="phone" value="{{ items["phone"] }}" disabled="disabled">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="email" class="form-control" name="email" value="{{ items["email"] }}" disabled="disabled">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Name</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="first_name" value="{{ items["first_name"] }}" disabled="disabled">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="last_name" value="{{ items["last_name"] }}" disabled="disabled">
+                                        </div>
+                                        <label class="col-sm-2 control-label">Sex</label>
+                                        <div class="col-md-2">
+                                            <input type="text" class="form-control" name="sex" value="{{ items["sex"] }}" disabled="disabled">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Country</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="country"  value="{{ items["country"] }}" disabled="disabled">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="province"  value="{{ items["province"] }}" disabled="disabled">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">District</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <input type="text" class="form-control" name="district"  value="{{ items["district"] }}" disabled="disabled">
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="text" class="form-control" name="zipcode"  value="{{ items["zipcode"] }}" disabled="disabled">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Address</label>
+                                <div class="col-sm-10">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <textarea name="address" class="form-control" rows="3" disabled="disabled">{{ items["address"] }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-default" onclick="window.location='{{ main_url }}{{ form }}';return false;">Back</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

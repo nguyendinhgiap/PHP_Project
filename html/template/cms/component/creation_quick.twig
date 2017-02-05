@@ -1,0 +1,30 @@
+<form class="form-inline" role="form" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+    {% for _name, _define in db %}
+        {% if _define.creation %}
+            {% set _value = items[_name] %}
+            <div class="form-group">
+                <label>{{ _define.alias }}</label>
+                {% include "cms/component/item.twig" %}
+            </div>
+        {% endif %}
+    {% endfor %}
+    {% if isModal %}
+        <button class="btn btn-primary" onclick="onCreate();return false;">Create</button>
+        <script>
+            function onCreate() {
+            {% set param = "{" %}
+            {% for _name, _define in db %}
+                {% if _define.creation %}
+                    {% set param = param~"_"~_name~':$("#'~_sId~_name~'").val(), ' %}
+                {% endif %}
+            {% endfor %}
+            {% set param = param~"}" %}
+
+                loadModal_("{{ main_url }}{{ form }}?action=creating", {{ param|raw }});
+            }
+        </script>
+    {% else %}
+        <button type="submit" class="btn btn-default" name="action" value="creating">Create</button>
+    {% endif %}
+</form>
+<hr>

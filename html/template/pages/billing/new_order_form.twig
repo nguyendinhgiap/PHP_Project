@@ -1,0 +1,240 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">{{ edit_title }}</div>
+        <div class="row wrapper">
+        </div>
+        <div class="row">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-8">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="action" value="editting">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Code</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" name="id" value="{{ items["id"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        {% set reseller = "" %}
+                        {% for __key, __value in db["reseller_id"].values %}
+                            {% if __key == items["reseller_id"] %}
+                                {% set reseller = __value %}
+                            {% endif %}
+                        {% endfor %}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Reseller</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="reseller" value="{{ reseller }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Datetime</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="datetime" value="{{ items["datetime"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Paid</label>
+                            <div class="col-sm-2">
+                                <label class="i-switch m-t-xs m-r">
+                                    <input type="checkbox" name="paid" value="1" {{ items["paid"] == 1 ? 'checked="checked"' }}>
+                                    <i></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Prices</label>
+                            <div class="col-sm-10">
+                                <table class="table table-striped b-t b-light">
+                                    <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Cost</th>
+                                        <th>Discount</th>
+                                        <th>Price</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>Device</th>
+                                        <td>${{ items["device_price"] }}</td>
+                                        <td>{{ items["device_discount"] }}%</td>
+                                        <td>${{ items["device_price_after_discount"] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Card</th>
+                                        <td>${{ items["card_price"] }}</td>
+                                        <td>{{ items["plan_discount"] }}%</td>
+                                        <td>${{ items["card_price_after_discount"] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total</th>
+                                        <td></td>
+                                        <td></td>
+                                        <td>${{ items["price"] }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Device number</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="device_count" value="{{ items["devices"]|length }}/{{ items["device_count"] }}" readonly="readonly">
+                                    {% if (items["devices"]|length > 0) %}
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-success" type="button" data-toggle="modal" data-target="#deviceListModal">List</button>
+                                        </span>
+                                    {% endif %}
+                                    {% if (items["devices"]|length < items["device_count"]) %}
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-info" type="button" data-toggle="modal" data-target="#myModal">
+                                                <i class="fa fa-plus text"></i>
+                                                <span class="text"> Add Device</span>
+                                            </button>
+                                        </span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        {% set _value = items["plans"] %}
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Plans</label>
+                            <div class="col-sm-10">
+                                <div class="table-responsive">
+                                    <table class="table table-striped b-t b-light">
+                                        <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            {% for title in db["plans"].join.displays_title %}
+                                                <th>{{ title }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                        </thead>
+                                        {% set index = index_start %}
+                                        <tbody>
+                                        {% for __items in _value %}
+                                            {% set index = index + 1 %}
+                                            <tr>
+                                                <td>{{ index }}</td>
+                                                {% for __key, __value in __items %}
+                                                    <td>{{ __key == "price" ? "$" }}{{ __value }}</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button type="submit" class="btn btn-default" name="action_type" value="save">Save</button>
+                            <button class="btn btn-default" onclick="window.location='{{ main_url }}{{ form }}';return false;">Cancel</button>
+                            <button type="submit" class="btn btn-danger" name="action_type" value="ignore">Ignore</button>
+                            {% if ((items["devices"]|length >= items["device_count"]) and (items["paid"] == 1)) %}
+                                <button type="submit" class="btn btn-success" name="action_type" value="finish">Complete</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Add device to order</h4>
+            </div>
+            <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="editting">
+                <input type="hidden" name="id" value="{{ items["id"] }}">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" >Device MAC</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="add_device_text_id" class="form-control auto_complete" name="device_id" value="" placeholder="MAC">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" id="add_device_submit_id" class="btn btn-primary" name="action_type" value="add_device" disabled="disabled">Add device</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<div id="deviceListModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Device List</h4>
+            </div>
+            <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="editting">
+                <input type="hidden" name="id" value="{{ items["id"] }}">
+
+                <div class="modal-body">
+                    <div class="row">
+                        {% for __items in items["devices"] %}
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" name="_{{ __items["id"] }}" value="{{ __items["id"] }}"> {{ __items["device_id"] }}
+                                    </label>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" name="action_type" value="remove_device">Remove from order</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.auto_complete').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/billing/search_device',
+            onSelect: function (data) {
+                $("#add_device_submit_id").removeAttr("disabled");
+            }
+
+        });
+
+        $("#add_device_text_id").keydown(function(event) {
+            if (event.which != 13) {
+                $("#add_device_submit_id").prop('disabled', true);
+            }
+        });
+
+        $('#myModal').on('shown.bs.modal', function () {
+//            alert("test");
+            $('#add_device_text_id').focus();
+        })
+    });
+</script>

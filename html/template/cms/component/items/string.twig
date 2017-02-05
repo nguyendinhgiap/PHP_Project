@@ -1,0 +1,11 @@
+{% set _req_ = _define.nullable ? "" : "required" %}
+<input type="text" class="form-control" id="{{ _sId~_name }}" name="_{{ _name }}" value="{{ _value }}" placeholder="{{ _define.placeholder|length > 0 ? _define.placeholder : '' }}" {{ _req_ }} {{ _readonly_ }}>
+{% if _define.suggest %}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#{{ _sId~_name }}').devbridgeAutocomplete({
+                serviceUrl: '{{ main_url }}{{ _define.s_uri }}'
+            });
+        });
+    </script>
+{% endif %}

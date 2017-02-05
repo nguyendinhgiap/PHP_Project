@@ -1,0 +1,192 @@
+<div class="wrapper-md">
+    <div class="panel panel-default">
+        <div class="panel-heading">Device Detail</div>
+        <div class="row wrapper">
+        </div>
+        <div class="row">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
+                <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Device ID</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["device_id"] }}" readonly="readonly">
+                            </div>
+                            <label class="control-label col-sm-2" >Creation date</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["datetime"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group has-success">
+                            <label class="control-label col-sm-2" >Status</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["status"] }}" readonly="readonly">
+                            </div>
+                            <label class="control-label col-sm-2" >Active date</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["active_datetime"] }}" readonly="readonly">
+                            </div>
+                            <label class="control-label col-sm-1" >Reseller</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["reseller_name"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <h4>Customer Information</h4>
+                        <input type="hidden" name="id" value="{{ items["id"] }}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">phone</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="autocomplete" name="phone" value="{{ items["customer_phone"] }}" placeholder="Phone">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="email" class="form-control" id="email_id" name="email" value="{{ items["customer_email"] }}" placeholder="Email">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Name</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="first_name_id" name="first_name" value="{{ items["customer_first_name"] }}" placeholder="First name">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="text" class="form-control" id="last_name_id" name="last_name" value="{{ items["customer_last_name"] }}" placeholder="Last name">
+                                    </div>
+                                    <label class="col-sm-2 control-label">Sex</label>
+                                    <div class="col-md-2">
+                                        <select name="sex"  id="sex_id">
+                                            <option value="male" {{ items["customer_sex"] == 'male' ? 'selected="selected"' }}>Male</option>
+                                            <option value="female" {{ items["customer_sex"] == 'female' ? 'selected="selected"' }}>Female</option>
+                                            <option value="other" {{ items["customer_sex"] == 'other' ? 'selected="selected"' }}>other</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Country/Province</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="_country" name="country"  value="{{ items["customer_country"] }}" placeholder="Country">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="_province" name="province"  value="{{ items["customer_province"] }}" placeholder="Province/City">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">District/zipcode</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <input type="text" class="form-control" id="_district" name="district"  value="{{ items["customer_district"] }}" placeholder="District">
+                                    </div>
+                                    <div class="col-md-2">
+                                        <input type="text" class="form-control" name="zipcode" id="_zipcode" value="{{ items["customer_zipcode"] }}" placeholder="Zipcode">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Address</label>
+                            <div class="col-sm-10">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <textarea name="address" id="address_id" class="form-control" rows="3" placeholder="Address">{{ items["customer_address"] }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button type="submit" class="btn btn-success" name="action" value="editting">Save Customer</button>
+                        </div>
+                        <br>
+
+                        <div class="line line-dashed b-b line-lg pull-in"></div>
+                        <h4>Device Information</h4>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >MAC</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" value="{{ items["mac"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Version name</label>
+                            <div class="col-sm-3">
+                                <input type="text" class="form-control" value="{{ items["version_name"] }}" readonly="readonly">
+                            </div>
+                            <label class="control-label col-sm-2" >Version code</label>
+                            <div class="col-sm-1">
+                                <input type="text" class="form-control" value="{{ items["version_code"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Platform</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["platform"] }}" readonly="readonly">
+                            </div>
+                            <label class="control-label col-sm-2" >OS Version</label>
+                            <div class="col-sm-2">
+                                <input type="text" class="form-control" value="{{ items["os_version"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" >Build Version</label>
+                            <div class="col-sm-6">
+                                <input type="text" class="form-control" value="{{ items["build_version"] }}" readonly="readonly">
+                            </div>
+                        </div>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button class="btn btn-default" onclick="window.location='{{ main_url }}{{ form }}';return false;">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#_country').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/country'
+        });
+        $('#_province').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/province'
+        });
+        $('#_district').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/suggest/region/district'
+        });
+
+
+        $('select').multiselect({
+            enableFiltering: false
+        });
+
+        $('#autocomplete').devbridgeAutocomplete({
+            serviceUrl: '{{ main_url }}/system/search_customer',
+            onSelect: function (data) {
+//                    console.log(data);
+                $("#first_name_id").val(data.data["first_name"]);
+                $("#last_name_id").val(data.data["last_name"]);
+                $("#email_id").val(data.data["email"]);
+                $("#address_id").val(data.data["address"]);
+                $('#gender_id').multiselect('select', [data.data["gender"]]);
+                $('#gender_id').multiselect('refresh');
+                $("#_country").val(data.data["country"]);
+                $("#_zipcode").val(data.data["zipcode"]);
+                $("#_province").val(data.data["province"]);
+                $("#_district").val(data.data["district"]);
+            }
+        });
+    });
+</script>

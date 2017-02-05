@@ -1,0 +1,48 @@
+{% if _readonly_ != "readonly" %}
+    <div class="input-group">
+        <input type="text" class="form-control" id="{{ _sId~_name }}" name="_{{ _name }}" id="_{{ _name }}_" value="{{ _value }}" readonly>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="initModal('{{ _define.alias }} manager', '{{ main_url }}{{ _define.uri~items[pkey]~'/'~items["name"]|url_encode }}', onFinishCallback_{{ _name }});return false;">Edit</button>
+                {#<button class="btn btn-default" type="button" onclick="initModal('{{ main_url }}/music/cate_item/mv/914/Ba', onFinishCallback_{{ _name }});return false;">Edit</button>#}
+            </span>
+    </div>
+    <script>
+        function onFinishCallback_{{ _name }}() {
+            $.ajax({
+                url : "{{ (main_url~form~'?action=item&'~pkey~'='~items[pkey]~'&key='~_name)|raw }}",
+                dataType: "text",
+                success : function (data) {
+                    $('#{{ _sId~_name }}').val(data);
+                }
+            });
+        }
+    </script>
+{% else %}
+    {#<input type="text" class="form-control" name="" value="{{ _value }}" readonly>#}
+    <div class="table-responsive">
+        <table class="table table-striped b-t b-light">
+            <thead>
+            <tr>
+                <th>#</th>
+                {% for title in _define.join.displays_title %}
+                    <th>{{ title }}</th>
+                {% endfor %}
+            </tr>
+            </thead>
+            {% set index = index_start %}
+            <tbody>
+            {% for __items in _value %}
+                {% set index = index + 1 %}
+                <tr>
+                    <td>{{ index }}</td>
+                    {% for __key, __value in __items %}
+                        <td>{{ __value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+{% endif %}

@@ -1,0 +1,53 @@
+{% if editForm|length == 0 %}
+    <div class="wrapper-md">
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ edit_title }}</div>
+            <div class="row wrapper">
+            </div>
+            <div class="row">
+                <div class="col-sm-2"></div>
+                <div class="col-sm-8">
+                    <form class="form-horizontal" action="{{ main_url }}{{ form }}"  method="POST" enctype="multipart/form-data">
+                        <input type="hidden" name="{{ pkey }}" value="{{ items[pkey] }}">
+                        {% for _name, _define in db %}
+                            {% if (_define.editable_d != false or _define.editable) and (_define.condition == null or items[_define.condition.k] == _define.condition.v) %}
+                                {% set _readonly_ = _define.editable ? "" : "readonly" %}
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" >{{ _define.alias }}</label>
+                                    <div class="col-sm-10">
+                                        {% set _value = items[_name] %}
+                                        {% set _value_download = items[_name~"_download"] %}
+                                        {% include "cms/component/item.twig" %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-10">
+                                <button type="submit" class="btn btn-default" name="action" value="editting">{{ edit_button }}</button>
+                                <button class="btn btn-default" onclick="window.location='{{ main_url }}{{ form }}';return false;">Cancel</button>
+                                {% if isDelete %}
+                                    <button type="button" class="btn btn-danger" onclick="onDelete();return false;">Delete</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function onDelete() {
+            if (confirm('{{ delete_notice }}')) {
+                window.location='{{ main_url }}{{ form }}?action=delete&{{ pkey }}={{ items[pkey] }}';
+            } else {
+                // Do nothing!
+            }
+        }
+    </script>
+{% else %}
+    {% include editForm %}
+{% endif %}
+

@@ -1,0 +1,51 @@
+{% extends "layout.twig" %}
+{% set content_title = 'Import Devices' %}
+
+{% block ext_header %}
+    <link rel="stylesheet" href="{{ root }}/css/input-file.css">
+{% endblock %}
+
+{% block content %}
+    <!-- content -->
+    <div id="content" class="app-content" role="main">
+        <div class="app-content-body ">
+            <div class="bg-light lter b-b wrapper-md">
+                <h1 class="m-n font-thin h3">{{ content_title }}</h1>
+            </div>
+            <div class="wrapper-md" ng-controller="FormDemoCtrl">
+                <div class="row">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-6">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <form class="form" action="{{ main_url }}/device/import" method="POST" enctype="multipart/form-data">
+                                    <div class="text-danger wrapper text-center" ng-show="authError">{{ error_message }}</div>
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-btn">
+                                                <span class="btn btn-primary btn-file">
+                                                    Select Excel File &hellip; <input type="file"  id="_file_" name="file" onchange="setFileInfo_(this.files)" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+                                                </span>
+                                            </span>
+                                            <input type="text" class="form-control cms_file" id="_text" readonly>
+                                            <script>
+                                                function setFileInfo_(files) {
+                                                    $("#_text").val(files[0].name);
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                    {#<div class="line line-dashed b-b line-lg pull-in"></div>#}
+                                    <button type="submit" class="btn btn-primary" name="action" value="import">Import</button>
+                                    <button class="btn btn-success" onclick="window.open('{{ root }}/import_template.xls'); return false;"><i class="fa-download fa"></i>  Download template</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /content -->
+
+{% endblock %}
