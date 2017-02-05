@@ -1,0 +1,24 @@
+{
+  "require": {
+    "slim/slim": "^2.6",
+    "catfan/Medoo": "^0.9.8",
+    "slim/views": "~0.1",
+    "twig/twig": "~1.0",
+    "hashids/hashids": "^2.0",
+    "phpmailer/phpmailer": "^5.2",
+    "PHPOffice/PHPExcel": "^1.8.1",
+    "mobiledetect/mobiledetectlib": "^2.8"
+  },
+  "autoload": {
+    "psr-0": {
+      "Middleware": "src",
+      "Controller": "src",
+      "Service": "src",
+      "Model": "src",
+      "Constants": "src",
+      "Configs": "src",
+      "Response": "src",
+      "Utils": "src"
+    }
+  }
+}
