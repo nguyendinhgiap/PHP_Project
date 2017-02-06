@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-require_once __DIR__ . './vendor/autoload.php';
-require_once __DIR__ . './config/config.php';
-require_once __DIR__ . './src/middleware/Welcome.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/src/middleware/Welcome.php';
 
 \Slim\Slim::registerAutoloader();
 
 $config = array(
-    'templates.path' => __DIR__ . './html/template',
+    'templates.path' => __DIR__ . '/html/template',
     'log.level' => Config::$LOG_LEVEL,
     'log.enabled' => Config::$LOG,
     'view' => new \Slim\Views\Twig()
@@ -40,6 +40,4 @@ $app->notFound(function () use ($app) {
 });
 
 $app->run();
-print "Hello";
-    var_dump('auth');
-die();
+?>
