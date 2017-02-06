@@ -5,7 +5,7 @@ class Config
     public static $LOG_LEVEL = 4;
     public static $LOG = true;
 
-    public static $ROOT = "/public_html";
+    public static $ROOT = "/html/public_html";
     public static $MAIN_URL = "/index.php";
 
     public static $SESSION_ACCOUNT = "SESSION_ACCOUNT";
