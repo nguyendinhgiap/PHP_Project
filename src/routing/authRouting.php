@@ -6,5 +6,5 @@
  * Time: 06:40
  */
 $app -> get('/login', function () use ($app) {
-    $app->render('page/login.twig', array());
+    $app->render('pages/login.twig', array());
 });
