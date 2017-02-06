@@ -75,6 +75,8 @@ class Welcome extends \Slim\Middleware
             $this->sessionManager();
 
             if (!$this->isLogin() && !$this->startsWith($path, '/auth', false)) {
+                var_dump('auth');
+                die();
                 return $app->response()->redirect(Config::$MAIN_URL . '/auth/login');
             } else {
                 $data = array(

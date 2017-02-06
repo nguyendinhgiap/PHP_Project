@@ -15,7 +15,7 @@ $config = array(
 );
 
 $app = new \Slim\Slim($config);
-$app -> add(new Welcome());
+$app->add(new Welcome());
 
 function checkPermission(\Slim\Slim $app, $rule)
 {
@@ -28,8 +28,6 @@ function checkPermission(\Slim\Slim $app, $rule)
 }
 
 $app->group('/auth', function () use ($app) {
-    var_dump('auth');
-    die();
     require_once "./src/routing/authRouting.php";
 });
 
