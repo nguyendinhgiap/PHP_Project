@@ -28,6 +28,8 @@ function checkPermission(\Slim\Slim $app, $rule)
 }
 
 $app->group('/auth', function () use ($app) {
+    var_dump('auth');
+    die();
     require_once "./src/routing/authRouting.php";
 });
 
