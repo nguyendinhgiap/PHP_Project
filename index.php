@@ -41,3 +41,4 @@ $app->notFound(function () use ($app) {
 
 $app->run();
 var_dump('auth');
+die();
