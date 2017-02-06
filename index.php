@@ -39,4 +39,8 @@ $app->notFound(function () use ($app) {
     }
 });
 
-$app->run();
+$app->run();?>
+<html>
+    <title>Hello</title>\
+    <body><h1>Hello</h1></body>
+</html>
