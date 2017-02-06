@@ -40,5 +40,6 @@ $app->notFound(function () use ($app) {
 });
 
 $app->run();
-var_dump('auth');
+print "Hello";
+    var_dump('auth');
 die();
