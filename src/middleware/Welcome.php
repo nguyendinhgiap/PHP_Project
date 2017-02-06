@@ -50,6 +50,7 @@ class Welcome extends \Slim\Middleware
         $path = $app->request()->getPathInfo();
 
         if ($this->startsWith($path, '/api', false) || $this->startsWith($path, '/suggest', false)) {  //  api
+            var_dump('api');
             require_once __DIR__ . "/../ApiRespond.php";
 
             if (!$this->startsWith($path, '/api/v1/device/init', false)
@@ -73,10 +74,11 @@ class Welcome extends \Slim\Middleware
 
         } else {        // CMS
             $this->sessionManager();
-
+            var_dump('auth');
             if (!$this->isLogin() && !$this->startsWith($path, '/auth', false)) {
                 return $app->response()->redirect(Config::$MAIN_URL . '/auth/login');
             } else {
+                var_dump('auth logined');
                 $data = array(
                     "main_url" => Config::$MAIN_URL,
                     "root" => Config::$ROOT,
